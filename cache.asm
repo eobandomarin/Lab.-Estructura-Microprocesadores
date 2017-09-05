@@ -16,7 +16,7 @@
 		%endmacro
 
 ; IMPRIMIR HEXA
-		%macro impr_hexa 1 	;recibe 2 parametros
+		%macro impr_hexa 1 	;recibe 1 parametro
 			mov rdx,%1		
 			lea ebx,[tabla]				
 			mov al,dl
