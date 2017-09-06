@@ -241,8 +241,10 @@ _start:
 	syscall
 	mov r9, [memoria_ram + 32]
 	mov r8, [memoria_ram + 33]
-	and r8, 0x0f000000
-	shr r8, 32
+	_parada1:
+	;and r8, 0x0f000000
+	shr r8, 24
+	_parada2:
 	add r8, r9
 	imprimir_texto ram_memoria, tam_ram_memoria
 
@@ -263,7 +265,7 @@ _start:
 	mov r9, [memoria_ram + 40]				;info sobre la memoria_ram disponible
 	mov r8, [memoria_ram + 41]
 	and r8, 0x0f000000
-	shr r8, 32
+	shr r8, 24
 	add r8, r9
 	imprimir_texto ram_disponible, tam_ram_disponible
 	mov rax, r8
@@ -284,17 +286,15 @@ _start:
 	mov ecx, 0
 	mov edx, 0
 	int 80h
-	_parada1:
 	mov eax,3
 	mov ebx,3
 	mov ecx,contenido_archivo
 	mov edx, 200
 	int 80h
-	_parada2:
 	mov r9, [contenido_archivo + 8]
 	mov r13, [contenido_archivo + 9]					;vuelta al registro
 	and r13, 0x0f000000
-	shr r13, 32
+	shr r13, 24
 	imprimir_reg3
 	mov rax, r13
   mov edx, eax
