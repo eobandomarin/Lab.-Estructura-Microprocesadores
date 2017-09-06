@@ -10,8 +10,9 @@ segment .data
 msg2 db "TEXTO GUARDADO",0xA                  ;mensaje de confirmacion
 len2 equ $-msg2
 
-archive db "/home/rob/Desktop/Prueba.txt",0    ;archivo creado
-text db "hbcilbckeufcbkewucbwqeukcbwqekucbwqeicfwqeukyf64r3r488r2r82fy38348734f83834f3i8f87387383",0
+archive db "./Prueba.txt",0    ;archivo creado
+text db "dddddddddddddddddddd     fffffffffffffffffffff    mmmmmmmmmmmmmmmmmmmmmmmmmm",0
+tamanotext equ $ - text
 
 segment .bss
 
@@ -25,11 +26,12 @@ segment .text
 global _start
 
 _start:
-                        ;crear archivo
+ 
+                       ;Crear el archivo txt
 mov eax, 8
 mov ebx, archive
-mov ecx, 2
-mov edx, 7777h
+mov ecx, 0x0700
+
 int 0x80
 
 test eax, eax                 ;verificar si se logro crear 
@@ -44,11 +46,11 @@ mov ecx, text
 mov eax, 4                      ;escribir en el archivo 
 mov ebx, [idarchive]
 mov ecx, text
-mov edx, 100                     ;numero de digitos 
+mov edx, tamanotext                     ;numero de digitos 
 int 0x80
 
 
-
+mov eax, 6
 
 salir:
  mov eax, 1
