@@ -1,0 +1,1036 @@
+%macro imprimir_texto 2 	;recibe 2 parametros
+	mov rax,1	;sys_write
+	mov rdi,1	;std_out
+	mov rsi,%1	;primer parametro: Texto
+	mov rdx,%2	;segundo parametro: Tamano texto
+	syscall
+%endmacro
+
+%macro dar_vuelta 0 ;no recibe parametros ya que solo es para darle
+mov r10, r9					;vuelta al registro
+mov r8, 0x8
+loop_1:
+	shl r9, 4
+	mov r12, r10
+	and r12, 0x0000000f
+	shr r10, 4
+	add r9, r12
+	dec r8
+	jnz loop_1
+%endmacro
+%macro imprimir_reg 0 	;No recibe parametros
+	;Para imprimir los 64 bits como caracteres ASCII se debe hacer un loop.
+	;Los 64 bits almacenan 8 nibbles, osea que se debe repetir 8 veces.
+	;Para hacer las repeticiones, usamos el registro R8
+	mov r8,0x8
+	loop:
+		mov r10,r9
+		;lookup con XLAT
+		and r10,0x0000000f
+		mov rdx,r10
+		lea ebx,[tabla]
+		mov al,dl
+		xlat
+		;Cada nibble se mueve a una direccion de memoria
+		mov [ano],ax
+		;y el contenido se imprime
+		mov rax,1	;sys_write
+		mov rdi,1	;std_out
+		mov rsi,ano;primer parametro: Texto
+		mov rdx,1	;segundo parametro: Tamano texto
+		syscall
+		;shift r9 en 4 bits a la derecha para movernos al siguiente nibble
+		shr r9,4
+		;Decrementar el contador almacenado en CL. Cuando se llega a cero, se termina
+		;la ejecucion de la macro
+		dec r8
+		jnz loop
+%endmacro
+%macro dar_vuelta1 0 ;no recibe parametros ya que solo es para darle
+mov r10, r9					;vuelta al registro
+mov r8, 0x8
+loop_11:
+	shl r9, 4
+	mov r12, r10
+	and r12, 0x0000000f
+	shr r10, 4
+	add r9, r12
+	dec r8
+	jnz loop_11
+%endmacro
+%macro imprimir_reg1 0 	;No recibe parametros
+	;Para imprimir los 64 bits como caracteres ASCII se debe hacer un loop.
+	;Los 64 bits almacenan 8 nibbles, osea que se debe repetir 8 veces.
+	;Para hacer las repeticiones, usamos el registro R8
+	mov r8,0x8
+	loop1:
+		mov r10,r9
+		;lookup con XLAT
+		and r10,0x0000000f
+		mov rdx,r10
+		lea ebx,[tabla]
+		mov al,dl
+		xlat
+		;Cada nibble se mueve a una direccion de memoria
+		mov [mes],ax
+		;y el contenido se imprime
+		mov rax,1	;sys_write
+		mov rdi,1	;std_out
+		mov rsi,mes;primer parametro: Texto
+		mov rdx,1	;segundo parametro: Tamano texto
+		syscall
+		;shift r9 en 4 bits a la derecha para movernos al siguiente nibble
+		shr r9,4
+		;Decrementar el contador almacenado en CL. Cuando se llega a cero, se termina
+		;la ejecucion de la macro
+		dec r8
+		jnz loop1
+%endmacro
+%macro dar_vuelta2 0 ;no recibe parametros ya que solo es para darle
+mov r10, r9					;vuelta al registro
+mov r8, 0x8
+loop_12:
+	shl r9, 4
+	mov r12, r10
+	and r12, 0x0000000f
+	shr r10, 4
+	add r9, r12
+	dec r8
+	jnz loop_12
+%endmacro
+%macro imprimir_reg2 0 	;No recibe parametros
+	;Para imprimir los 64 bits como caracteres ASCII se debe hacer un loop.
+	;Los 64 bits almacenan 8 nibbles, osea que se debe repetir 8 veces.
+	;Para hacer las repeticiones, usamos el registro R8
+	mov r8,0x8
+	loop2:
+		mov r10,r9
+		;lookup con XLAT
+		and r10,0x0000000f
+		mov rdx,r10
+		lea ebx,[tabla]
+		mov al,dl
+		xlat
+		;Cada nibble se mueve a una direccion de memoria
+		mov [dia],ax
+		;y el contenido se imprime
+		mov rax,1	;sys_write
+		mov rdi,1	;std_out
+		mov rsi,dia;primer parametro: Texto
+		mov rdx,1	;segundo parametro: Tamano texto
+		syscall
+		;shift r9 en 4 bits a la derecha para movernos al siguiente nibble
+		shr r9,4
+		;Decrementar el contador almacenado en CL. Cuando se llega a cero, se termina
+		;la ejecucion de la macro
+		dec r8
+		jnz loop2
+%endmacro
+%macro dar_vuelta3 0 ;no recibe parametros ya que solo es para darle
+mov r10, r9					;vuelta al registro
+mov r8, 0x8
+loop_13:
+	shl r9, 4
+	mov r12, r10
+	and r12, 0x0000000f
+	shr r10, 4
+	add r9, r12
+	dec r8
+	jnz loop_13
+%endmacro
+%macro imprimir_reg3 0 	;No recibe parametros
+	;Para imprimir los 64 bits como caracteres ASCII se debe hacer un loop.
+	;Los 64 bits almacenan 8 nibbles, osea que se debe repetir 8 veces.
+	;Para hacer las repeticiones, usamos el registro R8
+	mov r8,0x8
+	loop3:
+		mov r10,r9
+		;lookup con XLAT
+		and r10,0x0000000f
+		mov rdx,r10
+		lea ebx,[tabla]
+		mov al,dl
+		xlat
+		;Cada nibble se mueve a una direccion de memoria
+		mov [hora],ax
+		;y el contenido se imprime
+		mov rax,1	;sys_write
+		mov rdi,1	;std_out
+		mov rsi,hora;primer parametro: Texto
+		mov rdx,1	;segundo parametro: Tamano texto
+		syscall
+		;shift r9 en 4 bits a la derecha para movernos al siguiente nibble
+		shr r9,4
+		;Decrementar el contador almacenado en CL. Cuando se llega a cero, se termina
+		;la ejecucion de la macro
+		dec r8
+		jnz loop3
+%endmacro
+
+%macro dar_vuelta4 0 ;no recibe parametros ya que solo es para darle
+mov r10, r9					;vuelta al registro
+mov r8, 0x8
+loop_14:
+	shl r9, 4
+	mov r12, r10
+	and r12, 0x0000000f
+	shr r10, 4
+	add r9, r12
+	dec r8
+	jnz loop_14
+%endmacro
+%macro imprimir_reg4 0 	;No recibe parametros
+	;Para imprimir los 64 bits como caracteres ASCII se debe hacer un loop.
+	;Los 64 bits almacenan 8 nibbles, osea que se debe repetir 8 veces.
+	;Para hacer las repeticiones, usamos el registro R8
+	mov r8,0x8
+	loop4:
+		mov r10,r9
+		;lookup con XLAT
+		and r10,0x0000000f
+		mov rdx,r10
+		lea ebx,[tabla]
+		mov al,dl
+		xlat
+		;Cada nibble se mueve a una direccion de memoria
+		mov [min],ax
+		;y el contenido se imprime
+		mov rax,1	;sys_write
+		mov rdi,1	;std_out
+		mov rsi,min;primer parametro: Texto
+		mov rdx,1	;segundo parametro: Tamano texto
+		syscall
+		;shift r9 en 4 bits a la derecha para movernos al siguiente nibble
+		shr r9,4
+		;Decrementar el contador almacenado en CL. Cuando se llega a cero, se termina
+		;la ejecucion de la macro
+		dec r8
+		jnz loop4
+%endmacro
+
+;ANO,MES,DIA,HORA,MIN TIENEN UN MARCO CADA UNO PARA DARLE VUELTA E IMPRIMIRLOS
+
+;------------------------- FIN DE MACRO --------------------------------
+
+
+
+
+
+
+
+
+
+
+
+section .data
+
+  cons_header: db 'Contenido del registro: 0x'
+  cons_tam_header: equ $-cons_header
+	cons_nueva_linea: db 0xa
+	;La tabla es necesaria para poder indexar los caracteres ASCII
+	tabla: db "0123456789ABCDEF",0
+
+
+
+
+
+
+
+
+
+
+
+cons_esp: db ' ', 0xa
+
+section .bss
+
+		;Esta es una seccion de memoria de 4 bytes para guardar el valor del
+		;registro que se desea imprimir
+    mi_registro: resb 1
+		un_ascii: resb 1
+
+
+
+
+
+;Variable reservada para recibir datos
+
+
+fecha: resb 56
+ano: resb 1
+mes: resb 1
+dia: resb 1
+hora: resb 1
+min: resb 1
+
+un_byte: resb 1
+dia1: resb 8
+ano1: resb 8
+hora1: resb 8
+min1: resb 8
+se1: resb 8
+
+section .text
+
+global _start
+
+_start: 
+
+_input:
+;LIMPIA VARIABLES 
+xor r8,r8
+xor r9,r9
+xor r10,r10
+xor r11,r11
+
+
+;Conseguir año
+_ano:
+
+mov rax,96; deja listo cual llamada de siste se va hacer
+mov rdi,fecha; direcciona la posición en la que se va a guardar
+syscall; se hace la llamada de sistema
+mov r8,[fecha]; se obtiene el valor almacenado en dicha dirección, para su uso
+mov rdx,0x0
+mov rax,r8; se agrega el dividendo
+mov r9,0x01E1853E; se agrega el divisor, en este caso corresponde al numero de segundos que hay en un año
+div r9; se realiza la divison
+mov [ano1],rax ; se almacena los número de años que han pasado desde la fecha mencionada, hasta la fecha actual
+mov r8,0x7B2; se agrega el numero 1970
+add r8,rax; se suma el numero de años que han pasado a 1970, para obtener el año actual
+
+; se almacena el dato final en la variable ano
+mov r9,r8
+mov [ano],r9
+
+
+	dar_vuelta
+	imprimir_reg
+
+
+	mov rax,1	;sys_write
+	mov rdi,1	;std_out
+	mov rsi,cons_nueva_linea	;primer parametro: Texto
+	mov rdx,1	;segundo parametro: Tamano texto
+	syscall
+
+
+mov rax,1
+mov rdi,1
+mov rsi,cons_esp
+mov rdx,cons_tam_esp
+syscall
+
+%macro imprimir_texto 2 	;recibe 2 parametros
+	mov rax,1	;sys_write
+	mov rdi,1	;std_out
+	mov rsi,%1	;primer parametro: Texto
+	mov rdx,%2	;segundo parametro: Tamano texto
+	syscall
+%endmacro
+
+%macro dar_vuelta 0 ;no recibe parametros ya que solo es para darle
+mov r10, r9					;vuelta al registro
+mov r8, 0x8
+loop_1:
+	shl r9, 4
+	mov r12, r10
+	and r12, 0x0000000f
+	shr r10, 4
+	add r9, r12
+	dec r8
+	jnz loop_1
+%endmacro
+%macro imprimir_reg 0 	;No recibe parametros
+	;Para imprimir los 64 bits como caracteres ASCII se debe hacer un loop.
+	;Los 64 bits almacenan 8 nibbles, osea que se debe repetir 8 veces.
+	;Para hacer las repeticiones, usamos el registro R8
+	mov r8,0x8
+	loop:
+		mov r10,r9
+		;lookup con XLAT
+		and r10,0x0000000f
+		mov rdx,r10
+		lea ebx,[tabla]
+		mov al,dl
+		xlat
+		;Cada nibble se mueve a una direccion de memoria
+		mov [ano],ax
+		;y el contenido se imprime
+		mov rax,1	;sys_write
+		mov rdi,1	;std_out
+		mov rsi,ano;primer parametro: Texto
+		mov rdx,1	;segundo parametro: Tamano texto
+		syscall
+		;shift r9 en 4 bits a la derecha para movernos al siguiente nibble
+		shr r9,4
+		;Decrementar el contador almacenado en CL. Cuando se llega a cero, se termina
+		;la ejecucion de la macro
+		dec r8
+		jnz loop
+%endmacro
+%macro dar_vuelta1 0 ;no recibe parametros ya que solo es para darle
+mov r10, r9					;vuelta al registro
+mov r8, 0x8
+loop_11:
+	shl r9, 4
+	mov r12, r10
+	and r12, 0x0000000f
+	shr r10, 4
+	add r9, r12
+	dec r8
+	jnz loop_11
+%endmacro
+%macro imprimir_reg1 0 	;No recibe parametros
+	;Para imprimir los 64 bits como caracteres ASCII se debe hacer un loop.
+	;Los 64 bits almacenan 8 nibbles, osea que se debe repetir 8 veces.
+	;Para hacer las repeticiones, usamos el registro R8
+	mov r8,0x8
+	loop1:
+		mov r10,r9
+		;lookup con XLAT
+		and r10,0x0000000f
+		mov rdx,r10
+		lea ebx,[tabla]
+		mov al,dl
+		xlat
+		;Cada nibble se mueve a una direccion de memoria
+		mov [mes],ax
+		;y el contenido se imprime
+		mov rax,1	;sys_write
+		mov rdi,1	;std_out
+		mov rsi,mes;primer parametro: Texto
+		mov rdx,1	;segundo parametro: Tamano texto
+		syscall
+		;shift r9 en 4 bits a la derecha para movernos al siguiente nibble
+		shr r9,4
+		;Decrementar el contador almacenado en CL. Cuando se llega a cero, se termina
+		;la ejecucion de la macro
+		dec r8
+		jnz loop1
+%endmacro
+%macro dar_vuelta2 0 ;no recibe parametros ya que solo es para darle
+mov r10, r9					;vuelta al registro
+mov r8, 0x8
+loop_12:
+	shl r9, 4
+	mov r12, r10
+	and r12, 0x0000000f
+	shr r10, 4
+	add r9, r12
+	dec r8
+	jnz loop_12
+%endmacro
+%macro imprimir_reg2 0 	;No recibe parametros
+	;Para imprimir los 64 bits como caracteres ASCII se debe hacer un loop.
+	;Los 64 bits almacenan 8 nibbles, osea que se debe repetir 8 veces.
+	;Para hacer las repeticiones, usamos el registro R8
+	mov r8,0x8
+	loop2:
+		mov r10,r9
+		;lookup con XLAT
+		and r10,0x0000000f
+		mov rdx,r10
+		lea ebx,[tabla]
+		mov al,dl
+		xlat
+		;Cada nibble se mueve a una direccion de memoria
+		mov [dia],ax
+		;y el contenido se imprime
+		mov rax,1	;sys_write
+		mov rdi,1	;std_out
+		mov rsi,dia;primer parametro: Texto
+		mov rdx,1	;segundo parametro: Tamano texto
+		syscall
+		;shift r9 en 4 bits a la derecha para movernos al siguiente nibble
+		shr r9,4
+		;Decrementar el contador almacenado en CL. Cuando se llega a cero, se termina
+		;la ejecucion de la macro
+		dec r8
+		jnz loop2
+%endmacro
+%macro dar_vuelta3 0 ;no recibe parametros ya que solo es para darle
+mov r10, r9					;vuelta al registro
+mov r8, 0x8
+loop_13:
+	shl r9, 4
+	mov r12, r10
+	and r12, 0x0000000f
+	shr r10, 4
+	add r9, r12
+	dec r8
+	jnz loop_13
+%endmacro
+%macro imprimir_reg3 0 	;No recibe parametros
+	;Para imprimir los 64 bits como caracteres ASCII se debe hacer un loop.
+	;Los 64 bits almacenan 8 nibbles, osea que se debe repetir 8 veces.
+	;Para hacer las repeticiones, usamos el registro R8
+	mov r8,0x8
+	loop3:
+		mov r10,r9
+		;lookup con XLAT
+		and r10,0x0000000f
+		mov rdx,r10
+		lea ebx,[tabla]
+		mov al,dl
+		xlat
+		;Cada nibble se mueve a una direccion de memoria
+		mov [hora],ax
+		;y el contenido se imprime
+		mov rax,1	;sys_write
+		mov rdi,1	;std_out
+		mov rsi,hora;primer parametro: Texto
+		mov rdx,1	;segundo parametro: Tamano texto
+		syscall
+		;shift r9 en 4 bits a la derecha para movernos al siguiente nibble
+		shr r9,4
+		;Decrementar el contador almacenado en CL. Cuando se llega a cero, se termina
+		;la ejecucion de la macro
+		dec r8
+		jnz loop3
+%endmacro
+
+%macro dar_vuelta4 0 ;no recibe parametros ya que solo es para darle
+mov r10, r9					;vuelta al registro
+mov r8, 0x8
+loop_14:
+	shl r9, 4
+	mov r12, r10
+	and r12, 0x0000000f
+	shr r10, 4
+	add r9, r12
+	dec r8
+	jnz loop_14
+%endmacro
+%macro imprimir_reg4 0 	;No recibe parametros
+	;Para imprimir los 64 bits como caracteres ASCII se debe hacer un loop.
+	;Los 64 bits almacenan 8 nibbles, osea que se debe repetir 8 veces.
+	;Para hacer las repeticiones, usamos el registro R8
+	mov r8,0x8
+	loop4:
+		mov r10,r9
+		;lookup con XLAT
+		and r10,0x0000000f
+		mov rdx,r10
+		lea ebx,[tabla]
+		mov al,dl
+		xlat
+		;Cada nibble se mueve a una direccion de memoria
+		mov [min],ax
+		;y el contenido se imprime
+		mov rax,1	;sys_write
+		mov rdi,1	;std_out
+		mov rsi,min;primer parametro: Texto
+		mov rdx,1	;segundo parametro: Tamano texto
+		syscall
+		;shift r9 en 4 bits a la derecha para movernos al siguiente nibble
+		shr r9,4
+		;Decrementar el contador almacenado en CL. Cuando se llega a cero, se termina
+		;la ejecucion de la macro
+		dec r8
+		jnz loop4
+%endmacro
+
+;ANO,MES,DIA,HORA,MIN TIENEN UN MARCO CADA UNO PARA DARLE VUELTA E IMPRIMIRLOS
+
+;------------------------- FIN DE MACRO --------------------------------
+
+
+
+
+
+
+
+
+
+
+
+section .data
+
+  cons_header: db 'Contenido del registro: 0x'
+  cons_tam_header: equ $-cons_header
+	cons_nueva_linea: db 0xa
+	;La tabla es necesaria para poder indexar los caracteres ASCII
+	tabla: db "0123456789ABCDEF",0
+
+
+
+
+
+
+
+
+
+
+
+cons_esp: db ' ', 0xa
+
+section .bss
+
+		;Esta es una seccion de memoria de 4 bytes para guardar el valor del
+		;registro que se desea imprimir
+    mi_registro: resb 1
+		un_ascii: resb 1
+
+
+
+
+
+;Variable reservada para recibir datos
+
+
+fecha: resb 56
+ano: resb 1
+mes: resb 1
+dia: resb 1
+hora: resb 1
+min: resb 1
+
+un_byte: resb 1
+dia1: resb 8
+ano1: resb 8
+hora1: resb 8
+min1: resb 8
+se1: resb 8
+
+section .text
+
+global _start
+
+_start: 
+
+_input:
+;LIMPIA VARIABLES 
+xor r8,r8
+xor r9,r9
+xor r10,r10
+xor r11,r11
+
+
+;Conseguir año
+_ano:
+
+mov rax,96; deja listo cual llamada de siste se va hacer
+mov rdi,fecha; direcciona la posición en la que se va a guardar
+syscall; se hace la llamada de sistema
+mov r8,[fecha]; se obtiene el valor almacenado en dicha dirección, para su uso
+mov rdx,0x0
+mov rax,r8; se agrega el dividendo
+mov r9,0x01E1853E; se agrega el divisor, en este caso corresponde al numero de segundos que hay en un año
+div r9; se realiza la divison
+mov [ano1],rax ; se almacena los número de años que han pasado desde la fecha mencionada, hasta la fecha actual
+mov r8,0x7B2; se agrega el numero 1970
+add r8,rax; se suma el numero de años que han pasado a 1970, para obtener el año actual
+
+; se almacena el dato final en la variable ano
+mov r9,r8
+mov [ano],r9
+
+
+	dar_vuelta
+	imprimir_reg
+
+
+	mov rax,1	;sys_write
+	mov rdi,1	;std_out
+	mov rsi,cons_nueva_linea	;primer parametro: Texto
+	mov rdx,1	;segundo parametro: Tamano texto
+	syscall
+
+
+mov rax,1
+mov rdi,1
+mov rsi,cons_esp
+mov rdx,cons_tam_esp
+syscall
+
+
+mov r9, 0
+mov r8, 0
+
+mov r8,[fecha]
+mov rdx,0x0
+mov rax,r8
+mov r9, 0x0028206F ; se agrega el divisor, en este caso corresponde al numero de segundos que hay en un mes
+div r9
+mov r9,rax ; se almacena los número de años que han pasado desde la fecha mencionada, hasta la fecha actual
+mov rdx,0x0; se limpia el registro
+mov rax,[ano1]; se agrega el primer factor, en este caso el numero de años que han pasado
+mov r14,0xC; se agrega el segundo factor, en este caso el numero de meses que hay en un año
+mul r14; se realiza la multiplicacion
+sub r9,rax; lo que se acá, es que para obtener el mes actual, se resta el numero de meses totales que han pasado desde 1/1/70 menos
+; los que han pasado hasta el 1/1/año actual, el residuo es el número de meses que han pasado desde inicio de año
+add r9,1; factor de correción del numero de meses
+mov [mes],r9 ; se guarda el dato
+
+dar_vuelta1
+imprimir_reg1
+
+
+	mov rax,1	;sys_write
+	mov rdi,1	;std_out
+	mov rsi,cons_nueva_linea	;primer parametro: Texto
+	mov rdx,1	;segundo parametro: Tamano texto
+	syscall
+
+mov rax,1
+mov rdi,1
+mov rsi,cons_esp
+mov rdx,cons_tam_esp
+syscall
+
+mov r9, 0
+mov r8, 0
+
+
+_dia:
+
+mov r8,[fecha];se guarda el valor de epoch
+mov rdx,0x0
+mov rax,[ano1];se coge el valor de numero de años que han pasado
+mov r10,31556926;valor de la equivalencia de un año en segundos
+mul r10
+mov r10,rax
+sub r8,r10; al numero de segundos que han pasado desde el 1/1/1970 se le resta los que han pasado hasta el 1/1/17
+mov [dia1],r8
+mov rdx,0x0
+mov rax,r8
+mov r11,86400;equivalencia entre segundos y un día
+div r11
+mov r8,rax
+mov r9,r8
+mov [dia],r9; se guarda el valor de dias
+
+dar_vuelta2
+imprimir_reg2
+
+	mov rax,1	;sys_write
+	mov rdi,1	;std_out
+	mov rsi,cons_nueva_linea	;primer parametro: Texto
+	mov rdx,1	;segundo parametro: Tamano texto
+	syscall
+
+mov rax,1
+mov rdi,1
+mov rsi,cons_esp
+mov rdx,cons_tam_esp
+syscall
+
+
+
+mov r9, 0
+mov r8, 0
+
+
+
+
+_hora:
+
+mov r8,[dia1];valor en total de segundos en días
+;para obtener número de meses que han pasado
+mov r9,[mes]
+sub r9,1
+;obtener el valor en segundos del numero de meses
+mov rdx,0x0
+mov rax,r9
+mov r10,2629743
+mul r10
+mov r9,rax
+;le quito los meses que han pasado
+sub r8,r9
+;le quito la cantidad de días que han pasado hasta ahora, sin contar el actual
+mov r11,[dia]
+sub r11,244;numero de días que han pasado hasta inicio de mes
+_br0:
+mov rdx,0x0
+mov rax,r11
+mov r10,86400; convierto eso días a su equivalente a segundos
+mul r10
+_br1:
+mov r9,rax
+sub r8,r9
+sub r8,32400; diferencia horaria
+mov [hora1],r8
+mov rdx,0x0
+mov rax,r8
+mov r10,3600;convierto a horas
+div r10
+mov r8,rax
+mov r9,r8
+mov [hora],r9; se guarda el valor de dias
+
+
+dar_vuelta3
+imprimir_reg3
+
+	mov rax,1	;sys_write
+	mov rdi,1	;std_out
+	mov rsi,cons_nueva_linea	;primer parametro: Texto
+	mov rdx,1	;segundo parametro: Tamano texto
+	syscall
+
+mov rax,1
+mov rdi,1
+mov rsi,cons_esp
+mov rdx,cons_tam_esp
+syscall
+
+
+
+
+
+
+
+mov r9, 0
+mov r8, 0
+
+
+
+
+_min:
+
+mov r8,[hora1]; valor que tenía hasta el numero de horas, esto para solo realizar una operación más pequeña, sin la 
+;necesidad de volver hacer toda la operación
+mov r11,[hora]; cojo el número de horas
+mov rdx,0x0
+mov rax,r11
+mov r10,3600; convierto el numero de horas que han pasado para conseguir así su valor en segundos y poder restarlo
+;con lo cual, conseguiría el número de minutos
+mul r10
+mov r11,rax
+sub r8,r11
+mov [min1],r8; guardo el valor intermedio
+mov rdx,0x0
+mov rax,r8
+mov r10,60;convierto a minutos
+div r10
+mov r8,rax
+add r8,4; factor de correción
+cmp r8,59;para aumentar el numero de horas por si se el benchmark pasa de una hora a otra
+
+mov [min],r8
+
+mov r9,r8
+mov [min],r9
+
+
+
+
+dar_vuelta4
+imprimir_reg4
+
+	mov rax,1	;sys_write
+	mov rdi,1	;std_out
+	mov rsi,cons_nueva_linea	;primer parametro: Texto
+	mov rdx,1	;segundo parametro: Tamano texto
+	syscall
+
+mov rax,1
+mov rdi,1
+mov rsi,cons_esp
+mov rdx,cons_tam_esp
+syscall
+
+
+
+
+_Fin:
+  mov rax,60
+  mov rdi,0
+  syscall
+
+
+mov r9, 0
+mov r8, 0
+
+mov r8,[fecha]
+mov rdx,0x0
+mov rax,r8
+mov r9, 0x0028206F ; se agrega el divisor, en este caso corresponde al numero de segundos que hay en un mes
+div r9
+mov r9,rax ; se almacena los número de años que han pasado desde la fecha mencionada, hasta la fecha actual
+mov rdx,0x0; se limpia el registro
+mov rax,[ano1]; se agrega el primer factor, en este caso el numero de años que han pasado
+mov r14,0xC; se agrega el segundo factor, en este caso el numero de meses que hay en un año
+mul r14; se realiza la multiplicacion
+sub r9,rax; lo que se acá, es que para obtener el mes actual, se resta el numero de meses totales que han pasado desde 1/1/70 menos
+; los que han pasado hasta el 1/1/año actual, el residuo es el número de meses que han pasado desde inicio de año
+add r9,1; factor de correción del numero de meses
+mov [mes],r9 ; se guarda el dato
+
+dar_vuelta1
+imprimir_reg1
+
+
+	mov rax,1	;sys_write
+	mov rdi,1	;std_out
+	mov rsi,cons_nueva_linea	;primer parametro: Texto
+	mov rdx,1	;segundo parametro: Tamano texto
+	syscall
+
+mov rax,1
+mov rdi,1
+mov rsi,cons_esp
+mov rdx,cons_tam_esp
+syscall
+
+mov r9, 0
+mov r8, 0
+
+
+_dia:
+
+mov r8,[fecha];se guarda el valor de epoch
+mov rdx,0x0
+mov rax,[ano1];se coge el valor de numero de años que han pasado
+mov r10,31556926;valor de la equivalencia de un año en segundos
+mul r10
+mov r10,rax
+sub r8,r10; al numero de segundos que han pasado desde el 1/1/1970 se le resta los que han pasado hasta el 1/1/17
+mov [dia1],r8
+mov rdx,0x0
+mov rax,r8
+mov r11,86400;equivalencia entre segundos y un día
+div r11
+mov r8,rax
+mov r9,r8
+mov [dia],r9; se guarda el valor de dias
+
+dar_vuelta2
+imprimir_reg2
+
+	mov rax,1	;sys_write
+	mov rdi,1	;std_out
+	mov rsi,cons_nueva_linea	;primer parametro: Texto
+	mov rdx,1	;segundo parametro: Tamano texto
+	syscall
+
+mov rax,1
+mov rdi,1
+mov rsi,cons_esp
+mov rdx,cons_tam_esp
+syscall
+
+
+
+mov r9, 0
+mov r8, 0
+
+
+
+
+_hora:
+
+mov r8,[dia1];valor en total de segundos en días
+;para obtener número de meses que han pasado
+mov r9,[mes]
+sub r9,1
+;obtener el valor en segundos del numero de meses
+mov rdx,0x0
+mov rax,r9
+mov r10,2629743
+mul r10
+mov r9,rax
+;le quito los meses que han pasado
+sub r8,r9
+;le quito la cantidad de días que han pasado hasta ahora, sin contar el actual
+mov r11,[dia]
+sub r11,244;numero de días que han pasado hasta inicio de mes
+_br0:
+mov rdx,0x0
+mov rax,r11
+mov r10,86400; convierto eso días a su equivalente a segundos
+mul r10
+_br1:
+mov r9,rax
+sub r8,r9
+sub r8,32400; diferencia horaria
+mov [hora1],r8
+mov rdx,0x0
+mov rax,r8
+mov r10,3600;convierto a horas
+div r10
+mov r8,rax
+mov r9,r8
+mov [hora],r9; se guarda el valor de dias
+
+
+dar_vuelta3
+imprimir_reg3
+
+	mov rax,1	;sys_write
+	mov rdi,1	;std_out
+	mov rsi,cons_nueva_linea	;primer parametro: Texto
+	mov rdx,1	;segundo parametro: Tamano texto
+	syscall
+
+mov rax,1
+mov rdi,1
+mov rsi,cons_esp
+mov rdx,cons_tam_esp
+syscall
+
+
+
+
+
+
+
+mov r9, 0
+mov r8, 0
+
+
+
+
+_min:
+
+mov r8,[hora1]; valor que tenía hasta el numero de horas, esto para solo realizar una operación más pequeña, sin la 
+;necesidad de volver hacer toda la operación
+mov r11,[hora]; cojo el número de horas
+mov rdx,0x0
+mov rax,r11
+mov r10,3600; convierto el numero de horas que han pasado para conseguir así su valor en segundos y poder restarlo
+;con lo cual, conseguiría el número de minutos
+mul r10
+mov r11,rax
+sub r8,r11
+mov [min1],r8; guardo el valor intermedio
+mov rdx,0x0
+mov rax,r8
+mov r10,60;convierto a minutos
+div r10
+mov r8,rax
+add r8,4; factor de correción
+cmp r8,59;para aumentar el numero de horas por si se el benchmark pasa de una hora a otra
+
+mov [min],r8
+
+mov r9,r8
+mov [min],r9
+
+
+
+
+dar_vuelta4
+imprimir_reg4
+
+	mov rax,1	;sys_write
+	mov rdi,1	;std_out
+	mov rsi,cons_nueva_linea	;primer parametro: Texto
+	mov rdx,1	;segundo parametro: Tamano texto
+	syscall
+
+mov rax,1
+mov rdi,1
+mov rsi,cons_esp
+mov rdx,cons_tam_esp
+syscall
+
+
+
+
+_Fin:
+  mov rax,60
+  mov rdi,0
+  syscall
+
